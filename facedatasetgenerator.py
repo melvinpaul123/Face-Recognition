@@ -1,8 +1,7 @@
 import cv2
-import numpy as np
-import sys
 import sqlite3
 import os
+import sys
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 path = os.path.dirname(os.path.abspath(__file__))
@@ -10,7 +9,7 @@ cap = cv2.VideoCapture(0)
 i=0
 
 def info(Id,Name,Age,Gen):
-    conn=sqlite3.connect(path+r'\databaseset.db')
+    conn=sqlite3.connect(path+r'\facebase1.db')
     cmd="SELECT * FROM People WHERE ID="+str(Id)
     cursor=conn.execute(cmd)
     isRecordExist=0
@@ -40,7 +39,7 @@ while 1:
     ret, img = cap.read()
     cv2.resizeWindow('img', 600,500)
     #cv2.line(img,(600,250),(0,250),(0,255,0),1)
-    #cv2.line(img,(250,0),(250,500),(0,255,0),1)
+    #cv2.line(img,(300,0),(300,500),(0,255,0),1)
     #cv2.circle(img, (300, 250), 5, (255, 255, 255), -1)
     gray  = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor = 1.5, minNeighbors = 5)
@@ -57,7 +56,7 @@ while 1:
     k = cv2.waitKey(100) & 0xff
     if k == 27:
         break
-    if i>20:
+    if i>30:
         cap.release()
         cv2.destroyAllWindows()
         break
