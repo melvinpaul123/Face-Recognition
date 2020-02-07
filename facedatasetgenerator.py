@@ -34,10 +34,12 @@ name=input('enter the Name= ')
 age=input('enter the Age= ')
 gender=input('enter the Gender(M/F/Other)= ')
 info(id,name,age,gender)
-
+import os
+if not os.path.exists('dataset/'+str(id)):
+    os.makedirs('dataset/'+str(id))
 while 1:
     ret, img = cap.read()
-    cv2.resizeWindow('img', 600,500)
+    cv2.resizeWindow('img', 640,480)
     #cv2.line(img,(600,250),(0,250),(0,255,0),1)
     #cv2.line(img,(300,0),(300,500),(0,255,0),1)
     #cv2.circle(img, (300, 250), 5, (255, 255, 255), -1)
@@ -50,14 +52,14 @@ while 1:
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),5)
         roi_gray  = gray[y:y+h, x:x+w]
         roi_color = img[y:y+h, x:x+w]
-        cv2.imwrite("dataSet/face-"+str(id)+'.'+ str(i) + ".jpg", roi_gray)
+        cv2.imwrite("dataSet/"+str(id)+"/face-"+str(id)+'.'+ str(i) + ".png", roi_gray)
 
     cv2.imshow('img',img)
    
     k = cv2.waitKey(100) & 0xff
     if k == 27:
         break
-    if i>=30:
+    if i>=200:
         cap.release()
         cv2.destroyAllWindows()
         break
